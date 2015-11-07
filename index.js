@@ -139,7 +139,16 @@ function NestThermostatAccessory(log, name, device, deviceId, initialData) {
             this.log("Current humidity for " + this.name + " is: " + curHumidity);
             if (callback) callback(null, curHumidity);
         }.bind(this));
-
+        
+    this.getService(Service.Thermostat)
+        .getCharacteristic(Characteristic.CurrentFanMode)
+        .on('get', function(callback) {
+            var curFan = this.getCurrentFanMode();
+            this.log("Current Fan Mode for " + this.name + " is: " + curFan);
+            if (callback) callback(null, curFan);
+        }.bind(this))
+        .on('set', this.setCurrentFanMode.bind(this));
+        
     this.getService(Service.Thermostat)
         .getCharacteristic(Characteristic.TargetTemperature)
         .on('get', function(callback) {
@@ -174,6 +183,7 @@ NestThermostatAccessory.prototype.updateData = function(data) {
     thermostat.getCharacteristic(Characteristic.CurrentTemperature).getValue();
     thermostat.getCharacteristic(Characteristic.CurrentHeatingCoolingState).getValue();
     thermostat.getCharacteristic(Characteristic.CurrentRelativeHumidity).getValue();
+    thermostat.getCharacteristic(Characteristic.CurrentFanMode).getValue();
     thermostat.getCharacteristic(Characteristic.TargetHeatingCoolingState).getValue();
     thermostat.getCharacteristic(Characteristic.TargetTemperature).getValue();
 };
@@ -212,6 +222,17 @@ NestThermostatAccessory.prototype.getTargetHeatingCooling = function(){
             return Characteristic.CurrentHeatingCoolingState.HEAT | Characteristic.CurrentHeatingCoolingState.COOL;
         default:
             return Characteristic.CurrentHeatingCoolingState.OFF;
+    }
+};
+
+NestThermostatAccessory.prototype.getCurrentFanMode = function(){
+    switch(this.currentData.fanMode) {
+		case "on":
+            return Characteristic.CurrentFanMode.ON;
+        case "auto":
+            return Characteristic.CurrentFanMode.AUTO;
+        default:
+            return Characteristic.CurrentFanMode.AUTO;
     }
 };
 
@@ -269,6 +290,27 @@ NestThermostatAccessory.prototype.setTargetHeatingCooling = function(targetHeati
     nest.setTargetTemperatureType(this.deviceId, targetTemperatureType);
 
     if (callback) callback(null, targetTemperatureType);
+};
+
+NestThermostatAccessory.prototype.setCurrentFanMode = function(curFan, callback){
+    var targetFan = null;
+
+    switch(curFan) {
+        case Characteristic.CurrentFanMode.AUTO:
+            targetFan = 'auto';
+            break;
+        case Characteristic.CurrentFanMode.ON:
+            targetFan = 'on';
+            break;
+        default:
+            targetFan = 'auto';
+            break;
+    }
+
+    this.log("Setting target fan mode for " + this.name + " to: " + targetFan);
+    nest.setFanMode(this.deviceId, fanMode.targetFan);
+
+    if (callback) callback(null, targetFan);
 };
 
 NestThermostatAccessory.prototype.setTargetTemperature = function(targetTemperature, callback){
