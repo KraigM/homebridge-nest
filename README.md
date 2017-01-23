@@ -65,7 +65,7 @@ Configuration sample:
 		{
 			"platform": "Nest",
 			
-			"token" : "c.5ABsTpo88k5yfNIxZlh...",
+			"token" : "",
 			
 			"clientId": "developer client id",
 			"clientSecret": "developer client secret.",
