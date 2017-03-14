@@ -21,28 +21,37 @@ _Note: The name of the device will change as well.  It matches the name displaye
 
 ## How to Setup New API 
 
+### Create a Developer Account
+
+Skip this step if you already have one.
+
 1. Go to [https://developer.nest.com](https://developer.nest.com)
-2. Choose **Sign In**
-3. Use your normal account to sign in
-4. Fill in you info in 'Step 1'
-5. In 'Step 2' set:
+1. Choose **Sign In**
+1. Use your normal account to sign in
+1. Fill in you info in 'Step 1'
+1. In 'Step 2' set:
 	* **Company Name**: _HomeBridge-Nest_
 	* **Company URL**: _https://github.com/kraigm/homebridge-nest_
 	* **Country**: _[Your Country]_
 	* **Size of Company**: _Individual_
-6. Then just agree to the terms and submit
+1. Then just agree to the terms and submit
+
+### Log into your Developer Account
+
+Goto the [Nest Developers site](https://developers.nest.com/) and sign in.
+
 7. Go to **Products** and create a new product
 8. Fill in:
-	* **Product Name**: _HomeBridge_
+	* **Product Name**: _[YOUR NAME/UID]-HomeBridge_ (note that _Homebridge_ is taken and you can't use the keywork _Nest_)
 	* **Description**: _Open source project to provide HomeKit integration_
-	* **Categories**: _HomeAutomation_
+	* **Categories**: _Home Automation_
 	* **Support URL**: _https://github.com/kraigm/homebridge-nest_
 	* **Redirect URL**:  _[LEAVE BLANK]_
 	* **Permissions (minimum)**: 
-		* Enable **Thermostat** with **read/write v4**
+		* Enable **Thermostat** with **read/write v6**
 		* Enable **Away** with **read/write v2**
-		* Enable **Smoke+CO alarm** with **read v4** (if you ever might want Nest Protect)
-		* Enable **Camera** with **read v2** (if you ever might want Nest Cam, motion detection only)
+		* Enable **Smoke+CO alarm** with **read v5** (if you ever might want Nest Protect)
+		* Enable **Camera** with **read v3** (if you ever might want Nest Cam, motion detection only)
 9. Now you should have a product. Now locate the **Keys** section on the right of your product's page
 10. Copy the **Product ID** to your HomeBridge config as the **clientId** in the Nest config
 11. Copy the **Product Secret** to your HomeBridge config as the **clientSecret** in the Nest config
