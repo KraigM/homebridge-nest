@@ -21,21 +21,30 @@ _Note: The name of the device will change as well.  It matches the name displaye
 
 ## How to Setup New API 
 
+### Create a Developer Account
+
+Skip this step if you already have one.
+
 1. Go to [https://developer.nest.com](https://developer.nest.com)
-2. Choose **Sign In**
-3. Use your normal account to sign in
-4. Fill in you info in 'Step 1'
-5. In 'Step 2' set:
+1. Choose **Sign In**
+1. Use your normal account to sign in
+1. Fill in you info in 'Step 1'
+1. In 'Step 2' set:
 	* **Company Name**: _HomeBridge-Nest_
 	* **Company URL**: _https://github.com/kraigm/homebridge-nest_
 	* **Country**: _[Your Country]_
 	* **Size of Company**: _Individual_
-6. Then just agree to the terms and submit
+1. Then just agree to the terms and submit
+
+### Log into your Developer Account
+
+Goto the [Nest Developers site](https://developers.nest.com/) and sign in.
+
 7. Go to **Products** and create a new product
 8. Fill in:
-	* **Product Name**: _HomeBridge_
+	* **Product Name**: _[LEAVE BLANK]-HomeBridge_ (note that _Homebridge_ is taken and you can't use the keywork _Nest_)
 	* **Description**: _Open source project to provide HomeKit integration_
-	* **Categories**: _HomeAutomation_
+	* **Categories**: _Home Automation_
 	* **Support URL**: _https://github.com/kraigm/homebridge-nest_
 	* **Redirect URL**:  _[LEAVE BLANK]_
 	* **Permissions (minimum)**: 
