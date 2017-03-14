@@ -48,10 +48,10 @@ Goto the [Nest Developers site](https://developers.nest.com/) and sign in.
 	* **Support URL**: _https://github.com/kraigm/homebridge-nest_
 	* **Redirect URL**:  _[LEAVE BLANK]_
 	* **Permissions (minimum)**: 
-		* Enable **Thermostat** with **read/write v4**
+		* Enable **Thermostat** with **read/write v6**
 		* Enable **Away** with **read/write v2**
-		* Enable **Smoke+CO alarm** with **read v4** (if you ever might want Nest Protect)
-		* Enable **Camera** with **read v2** (if you ever might want Nest Cam, motion detection only)
+		* Enable **Smoke+CO alarm** with **read v5** (if you ever might want Nest Protect)
+		* Enable **Camera** with **read v3** (if you ever might want Nest Cam, motion detection only)
 9. Now you should have a product. Now locate the **Keys** section on the right of your product's page
 10. Copy the **Product ID** to your HomeBridge config as the **clientId** in the Nest config
 11. Copy the **Product Secret** to your HomeBridge config as the **clientSecret** in the Nest config
