@@ -42,7 +42,7 @@ Goto the [Nest Developers site](https://developers.nest.com/) and sign in.
 
 7. Go to **Products** and create a new product
 8. Fill in:
-	* **Product Name**: _[LEAVE BLANK]-HomeBridge_ (note that _Homebridge_ is taken and you can't use the keywork _Nest_)
+	* **Product Name**: _[YOUR NAME/UID]-HomeBridge_ (note that _Homebridge_ is taken and you can't use the keywork _Nest_)
 	* **Description**: _Open source project to provide HomeKit integration_
 	* **Categories**: _Home Automation_
 	* **Support URL**: _https://github.com/kraigm/homebridge-nest_
