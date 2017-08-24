@@ -427,7 +427,7 @@ NestThermostatAccessory.prototype.setTargetHeatingCooling = function (targetHeat
 	}
 
 	this.log("Setting target heating cooling for " + this.name + " to: " + targetTemperatureType);
-	nest.setTargetTemperatureType(this.deviceId, targetTemperatureType);
+	nest.setTargetTemperatureType(this.deviceId, this.getTargetHeatingCooling());
 
 	if (callback) callback(null, targetTemperatureType);
 };
