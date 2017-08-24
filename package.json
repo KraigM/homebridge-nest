@@ -1,0 +1,26 @@
+{
+  "name": "homebridge-nest",
+  "description": "Nest plugin for homebridge",
+  "version": "1.1.2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seifscape/homebridge-nest.git"
+  },
+  "license": "ISC",
+  "preferGlobal": true,
+  "keywords": [
+    "homebridge-plugin",
+    "nest"
+  ],
+  "engines": {
+    "node": ">=0.12.0",
+    "homebridge": ">=0.2.5"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "firebase": "^2.4.2",
+    "lodash.debounce": "^4.0.8",
+    "request-promise": "^1.0.2",
+    "unofficial-nest-api": "git+https://github.com/kraigm/unofficial_nodejs_nest.git#3cbd337adc32fab3b481659b38d86f9fcd6a9c02"
+  }
+}
