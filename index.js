@@ -305,6 +305,17 @@ function NestThermostatAccessory(log, name, device, deviceId, initialData, struc
 		.on('get', function (callback) {
 			var targetTemp = this.getTargetTemperature();
 			this.log("Target temperature for " + this.name + " is: " + targetTemp);
+			var targetHeatingCooling = this.getTargetHeatingCooling();
+			this.log("Target heating for " + this.name + " is: " + targetHeatingCooling);
+			if (targetHeatingCooling != 'Off') {
+				fs.writeFile(CONFIG_PATH, targetHeatingCooling, encoding='utf8', function(err) {
+					if(err) {
+						return this.log(err);
+					}
+					this.previousMode = targetHeatingCooling;
+					this.log("config was saved!");
+				});
+			}
 			if (callback) callback(null, targetTemp);
 		}.bind(this))
 		.on('set', this.setTargetTemperature.bind(this));	
@@ -317,10 +328,10 @@ function NestThermostatAccessory(log, name, device, deviceId, initialData, struc
 			if (targetHeatingCooling != 'Off') {
 				fs.writeFile(CONFIG_PATH, targetHeatingCooling, encoding='utf8', function(err) {
 					if(err) {
-						return console.log(err);
+						return this.log(err);
 					}
 					this.previousMode = targetHeatingCooling;
-					console.log("config was saved!");
+					this.log("config was saved!");
 				});
 			}
 			if (callback) callback(null, targetHeatingCooling);
@@ -443,9 +454,9 @@ NestThermostatAccessory.prototype.setTargetHeatingCooling = function (targetHeat
 	try {  
 		var data = fs.readFileSync(CONFIG_PATH, 'utf8');
 		this.previousMode = data;		
-		console.log(data);
+		this.log(data);
 	} catch(e) {
-		console.log('Error:', e.stack);
+		this.log('Error:', e.stack);
 	}
 
 	if (this.getCurrentHeatingCooling() == this.previousMode){
