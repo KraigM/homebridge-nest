@@ -3,7 +3,7 @@ var NestConnection = require('./lib/nest-connection.js');
 var inherits = require('util').inherits;
 var fs = require('fs');
 var readline = require('readline');
-let CONFIG_PATH = '/config/lastMode.conf'
+let CONFIG_PATH = 'lastMode.conf'
 var previousMode;
 
 var Service, Characteristic, Accessory, uuid, Away;
