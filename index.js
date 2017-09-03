@@ -1,6 +1,10 @@
 var nest = require('unofficial-nest-api');
 var NestConnection = require('./lib/nest-connection.js');
 var inherits = require('util').inherits;
+var fs = require('fs');
+var readline = require('readline');
+let CONFIG_PATH = process.env.HOME +'lastMode.conf'
+var previousMode;
 
 var Service, Characteristic, Accessory, uuid, Away;
 var DeviceAccessory, ThermostatAccessory, ProtectAccessory, CamAccessory;
@@ -301,15 +305,35 @@ function NestThermostatAccessory(log, name, device, deviceId, initialData, struc
 		.on('get', function (callback) {
 			var targetTemp = this.getTargetTemperature();
 			this.log("Target temperature for " + this.name + " is: " + targetTemp);
+			var targetHeatingCooling = this.getTargetHeatingCooling();
+			this.log("Target heating for " + this.name + " is: " + targetHeatingCooling);
+			if (targetHeatingCooling != 'Off') {
+				fs.writeFile(CONFIG_PATH, targetHeatingCooling, encoding='utf8', function(err) {
+					if(err) {
+						return this.log(err);
+					}
+					this.previousMode = targetHeatingCooling;
+					this.log("config was saved!");
+				});
+			}
 			if (callback) callback(null, targetTemp);
 		}.bind(this))
-		.on('set', this.setTargetTemperature.bind(this));
+		.on('set', this.setTargetTemperature.bind(this));	
 
 	this.getService(Service.Thermostat)
 		.getCharacteristic(Characteristic.TargetHeatingCoolingState)
 		.on('get', function (callback) {
 			var targetHeatingCooling = this.getTargetHeatingCooling();
 			this.log("Target heating for " + this.name + " is: " + targetHeatingCooling);
+			if (targetHeatingCooling != 'Off') {
+				fs.writeFile(CONFIG_PATH, targetHeatingCooling, encoding='utf8', function(err) {
+					if(err) {
+						return this.log(err);
+					}
+					this.previousMode = targetHeatingCooling;
+					this.log("config was saved!");
+				});
+			}
 			if (callback) callback(null, targetHeatingCooling);
 		}.bind(this))
 		.on('set', this.setTargetHeatingCooling.bind(this));
@@ -427,8 +451,21 @@ NestThermostatAccessory.prototype.setTargetHeatingCooling = function (targetHeat
 	}
 
 	this.log("Setting target heating cooling for " + this.name + " to: " + targetTemperatureType);
-	nest.setTargetTemperatureType(this.deviceId, targetTemperatureType);
+	try {  
+		var data = fs.readFileSync(CONFIG_PATH, 'utf8');
+		this.previousMode = data;		
+		this.log(data);
+	} catch(e) {
+		this.log('Error:', e.stack);
+	}
 
+	if (this.getCurrentHeatingCooling() == this.previousMode){
+		nest.setTargetTemperatureType(this.deviceId, this.getTargetHeatingCooling());		
+	}
+	else {
+		nest.setTargetTemperatureType(this.deviceId, this.previousMode);				
+	}
+	
 	if (callback) callback(null, targetTemperatureType);
 };
 
