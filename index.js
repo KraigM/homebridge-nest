@@ -3,7 +3,7 @@ var NestConnection = require('./lib/nest-connection.js');
 var inherits = require('util').inherits;
 var fs = require('fs');
 var readline = require('readline');
-let CONFIG_PATH = '~/.homebridge/lastMode.conf'
+let CONFIG_PATH = process.env.HOME +'lastMode.conf'
 var previousMode;
 
 var Service, Characteristic, Accessory, uuid, Away;
@@ -307,7 +307,7 @@ function NestThermostatAccessory(log, name, device, deviceId, initialData, struc
 			this.log("Target temperature for " + this.name + " is: " + targetTemp);
 			if (callback) callback(null, targetTemp);
 		}.bind(this))
-		.on('set', this.setTargetTemperature.bind(this));
+		.on('set', this.setTargetTemperature.bind(this));	
 
 	this.getService(Service.Thermostat)
 		.getCharacteristic(Characteristic.TargetHeatingCoolingState)
@@ -315,7 +315,7 @@ function NestThermostatAccessory(log, name, device, deviceId, initialData, struc
 			var targetHeatingCooling = this.getTargetHeatingCooling();
 			this.log("Target heating for " + this.name + " is: " + targetHeatingCooling);
 			if (targetHeatingCooling != 'Off') {
-				fs.writeFile(CONFIG_PATH, targetHeatingCooling, function(err) {
+				fs.writeFile(CONFIG_PATH, targetHeatingCooling, encoding='utf8', function(err) {
 					if(err) {
 						return console.log(err);
 					}
