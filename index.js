@@ -108,10 +108,29 @@ NestPlatform.prototype = {
 		var generateAccessories = function(data) {
 			var foundAccessories = [];
 
+			var includeDevices = this.config["includeDevices"];
+			var excludeDevices = this.config["excludeDevices"];
+
 			var loadDevices = function(DeviceType) {
 				var list = data.devices && data.devices[DeviceType.deviceGroup];
 				for (var deviceId in list) {
 					if (list.hasOwnProperty(deviceId)) {
+
+						if(includeDevices) {
+							if(includeDevices.indexOf(deviceId) == -1) {
+								this.log("Skipping nest device " + deviceId + " because it is not in list of included devices in config");
+								continue;
+							}
+						}
+
+						if(excludeDevices) {
+							if(excludeDevices.indexOf(deviceId) != -1) {
+								this.log("Skipping nest device " + deviceId + " because it is excluded by config");
+								continue;
+							}
+						}
+
+						this.log("Adding nest device: " + deviceId);
 						var device = list[deviceId];
 						var structureId = device['structure_id'];
 						var structure = data.structures[structureId];
